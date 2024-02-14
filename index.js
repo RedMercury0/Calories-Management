@@ -7,7 +7,7 @@ import app from './server.js';
 dotenv.config();
 const mongo_username = process.env.MONGODB_USERNAME;
 const mongo_password = process.env.MONGODB_PASSWORD;
-const port = process.env.MONGO_PORT; // Server PORT
+const port = process.env.PORT || 8000; // Server PORT
 
 // Connection string to the mongo database
 const uri = `mongodb+srv://${mongo_username}:${mongo_password}@cluster0.5hyk38t.mongodb.net/Calories-Manager`;
