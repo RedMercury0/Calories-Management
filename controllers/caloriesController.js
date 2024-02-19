@@ -31,12 +31,13 @@ export default class CaloriesController {
             res.status(500).json({ error: e.message });
         }
     }
-    static async apiGetReport(req, res, next) {
+    static async apiGetReport1(req, res, next) {
         try {
 
             const user_id = req.params.user_id;
             const month = req.params.month;
             const year = req.params.year;
+
 
             const report = await CaloriesDAO.getReport(user_id, year, month);
             res.json(report);
@@ -44,5 +45,23 @@ export default class CaloriesController {
             res.status(500).json({ error: e.message });
         }
     }
+    static async apiGetReport(req, res, next) {
+        try {
+            const user_id = req.query.user_id;
+            const month = req.query.month;
+            const year = req.query.year;
+
+            // Check if all required parameters are present
+            if (!user_id || !month || !year) {
+                return res.status(400).json({ error: "Missing required parameters" });
+            }
+
+            const report = await CaloriesDAO.getReport(user_id, year, month);
+            res.json(report);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    }
+
 
 }

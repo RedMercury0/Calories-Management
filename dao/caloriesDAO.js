@@ -27,6 +27,11 @@ export default class CaloriesDAO {
             // Query the database for calorie consumption items matching the provided user_id, year, and month
             const report = await CaloriesModel.find({ user_id, year, month },null,null);
 
+            // Check if report is empty or null, if the requested report exists in the database or not
+            if (!report || report.length === 0) {
+                return { error: "Data with the specified parameters does not exist" }; // Return error message
+            }
+
             // Initialize an object to store the report data
             const result = {
                 breakfast: [],

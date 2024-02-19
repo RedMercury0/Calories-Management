@@ -17,7 +17,12 @@ caloriesRouter.route("/addcalories").post(CaloriesCtrl.apiPostCalories); //add c
 // 	“dinner”:[ ],
 // 	“other”:[ ]
 // }
-caloriesRouter.route("/report/:user_id/:month/:year").get(CaloriesCtrl.apiGetReport); // get report for the user
+// getting report using url route
+//caloriesRouter.route("/report/:user_id/:month/:year").get(CaloriesCtrl.apiGetReport); // get report for the user
+
+// getting report using query parameters
+caloriesRouter.route("/report").get(CaloriesCtrl.apiGetReport);
+
 
 // Export the route so we can use in another file
 export default caloriesRouter;
