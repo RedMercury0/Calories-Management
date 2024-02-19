@@ -17,8 +17,6 @@ caloriesRouter.route("/addcalories").post(CaloriesCtrl.apiPostCalories); //add c
 // 	“dinner”:[ ],
 // 	“other”:[ ]
 // }
-// getting report using url route
-//caloriesRouter.route("/report/:user_id/:month/:year").get(CaloriesCtrl.apiGetReport); // get report for the user
 
 // getting report using query parameters
 caloriesRouter.route("/report").get(CaloriesCtrl.apiGetReport);

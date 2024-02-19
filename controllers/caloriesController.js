@@ -31,20 +31,7 @@ export default class CaloriesController {
             res.status(500).json({ error: e.message });
         }
     }
-    static async apiGetReport1(req, res, next) {
-        try {
 
-            const user_id = req.params.user_id;
-            const month = req.params.month;
-            const year = req.params.year;
-
-
-            const report = await CaloriesDAO.getReport(user_id, year, month);
-            res.json(report);
-        } catch (e) {
-            res.status(500).json({ error: e.message });
-        }
-    }
     static async apiGetReport(req, res, next) {
         try {
             const user_id = req.query.user_id;
