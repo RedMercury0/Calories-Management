@@ -26,7 +26,7 @@ const calorieSchema = new mongoose.Schema({
         enum: ['breakfast', 'lunch', 'dinner', 'other'], // Define allowed categories
         required: true
     },
-    sum: {
+    amount: {
         type: Number,
         required: true
     }

@@ -4,7 +4,7 @@ import UsersModel from '../models/usersModel.js';
 export default class CaloriesDAO {
 
 
-    static async addCalories(user_id, year, month, day, description, category, sum) {
+    static async addCalories(user_id, year, month, day, description, category, amount) {
         try {
             // Check if the user exists
             const user = await UsersModel.findOne({ id: user_id },null,null);
@@ -12,7 +12,7 @@ export default class CaloriesDAO {
                 return { error: "User not found" };
             }
 
-            const newCalories = new CaloriesModel({ user_id, year, month, day, description, category, sum });
+            const newCalories = new CaloriesModel({ user_id, year, month, day, description, category, amount });
             await newCalories.save();
 
             return { status: "success" };
@@ -27,10 +27,7 @@ export default class CaloriesDAO {
             // Query the database for calorie consumption items matching the provided user_id, year, and month
             const report = await CaloriesModel.find({ user_id, year, month },null,null);
 
-            // Check if report is empty or null, if the requested report exists in the database or not
-            if (!report || report.length === 0) {
-                return { error: "Data with the specified parameters does not exist" }; // Return error message
-            }
+
 
             // Initialize an object to store the report data
             const result = {
@@ -42,8 +39,8 @@ export default class CaloriesDAO {
 
             // Iterate over each calorie consumption item in the report array
             for (const item of report) {
-                const { category, day, description, sum } = item;
-                result[category].push({ day, description, sum });
+                const { category, day, description, amount } = item;
+                result[category].push({ day, description, amount });
             }
 
             // Return the generated report

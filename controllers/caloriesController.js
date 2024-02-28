@@ -8,7 +8,7 @@ export default class CaloriesController {
     static async apiPostCalories(req, res, next) {
         try {
 
-            const { user_id, description, category, sum } = req.body;
+            const { user_id, description, category, amount } = req.body;
 
             // If year, month, and day are not provided, use the current date
             const currentDate = new Date();
@@ -23,7 +23,7 @@ export default class CaloriesController {
                 day,
                 description,
                 category.toLowerCase(),
-                sum
+                amount
             );
 
             res.json({ status: "success" });
