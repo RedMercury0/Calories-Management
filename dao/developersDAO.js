@@ -5,7 +5,7 @@ export default class DevelopersDAO {
     static async getAllDevelopers(user_id, year, month) {
         try {
             // Get all the developers info
-            const allDevelopers = await DevelopersModel.find({},null,null);
+            const allDevelopers = await DevelopersModel.find({firstname,lastname,id,email},null,null);
 
             return allDevelopers;
         } catch (error) {
