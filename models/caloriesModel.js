@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+// The calories report data model with the parameters:
+// user id, the date of the report (year,month,day) , description, category(only from the allowed categories) and amount of calories
+
 const calorieSchema = new mongoose.Schema({
     user_id: {
         type: String,

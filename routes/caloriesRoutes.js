@@ -1,24 +1,15 @@
 import express from "express";
 import CaloriesCtrl from "../controllers/caloriesController.js"
 
-// When people go to the url this will route to different parts of the application
+
 const caloriesRouter = express.Router();
 
-// Creating routing
-//The automatic test will try to add a new calorie consumption item by sending (with the POST method)
-//the following parameters: user_id, year, month, day, description, category, and amount. The category will be one of the available ones, according to this document.
-caloriesRouter.route("/addcalories").post(CaloriesCtrl.apiPostCalories); //add calories to user
 
-//The automatic test will try to get the report for a specific month, year and user by sending (with the GET method)
-// the following parameters: user_id, month, and year. The expected returned document should look as the following example:
-// {
-// 	“breakfast”:[{“day”:21,”description”:”chocolate in ikea”,”amount”:300},{“day”:5,”description”:”milk”,”amount”:6} ],
-// 	“lunch”:[ ],
-// 	“dinner”:[ ],
-// 	“other”:[ ]
-// }
+// Creating the "addcalories" route with the post method, route to add new calories to a user
+caloriesRouter.route("/addcalories").post(CaloriesCtrl.apiPostCalories);
 
-// getting report using query parameters
+
+// Creating the report route with the get method, route to get specific report by user id, month and year
 caloriesRouter.route("/report").get(CaloriesCtrl.apiGetReport);
 
 

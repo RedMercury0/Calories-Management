@@ -3,13 +3,13 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from './server.js';
 
-// Set up environment variables (.env)
+// Setting up the environment variables (.env)
 dotenv.config();
 const mongo_username = process.env.MONGODB_USERNAME;
 const mongo_password = process.env.MONGODB_PASSWORD;
 const port = process.env.PORT || 8000; // Server PORT
 
-// Connection string to the mongo database
+// The connection string to the mongo database
 const uri = `mongodb+srv://${mongo_username}:${mongo_password}@cluster0.5hyk38t.mongodb.net/Calories-Manager`;
 
 // Connect to MongoDB using Mongoose

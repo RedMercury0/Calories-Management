@@ -1,15 +1,18 @@
-// Imports
+
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+
 import mainRoutes from './routes/mainRoutes.js';
 
 const app = express();
 
-// Express middleware
+// Middlewares
 app.use(cors());
 app.use(express.json()) //allow the server to accept json in the body of the request
 
-// Initial routes specification (urls accessed that are used to send and receive information)
+
+// Initial routes specification
 // Main routes
 app.use('/', mainRoutes);
 

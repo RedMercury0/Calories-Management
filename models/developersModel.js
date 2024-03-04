@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+// The developers data model with the parameters:
+// first name, last name , id and email
+
 const developerSchema = new mongoose.Schema({
 
     firstname: {

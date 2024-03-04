@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+// The users  data model with the parameters:
+// id, first name, last name and birthday(date type)
+
 const userSchema = new mongoose.Schema({
 
     id: {

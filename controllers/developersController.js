@@ -2,6 +2,7 @@ import DeveloperDAO from "../dao/developersDAO.js";
 
 export default class DevelopersController {
 
+    // Retrieving all the developers information in a json format
     static async apiGetAbout(req, res, next) {
         try {
 

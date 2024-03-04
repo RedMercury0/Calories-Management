@@ -3,7 +3,7 @@ import UsersModel from '../models/usersModel.js';
 
 export default class CaloriesDAO {
 
-
+    // Adding a new calories report for specific user if the user id exists in the database
     static async addCalories(user_id, year, month, day, description, category, amount) {
         try {
             // Check if the user exists
@@ -22,6 +22,8 @@ export default class CaloriesDAO {
         }
     }
 
+    // Fetching all the calories reports for specific user by his id and the date( day and month )
+    // If no reports exits it return empty report
     static async getReport(user_id, year, month) {
         try {
             // Query the database for calorie consumption items matching the provided user_id, year, and month
@@ -44,6 +46,7 @@ export default class CaloriesDAO {
             }
 
             // Return the generated report
+            // If the report was empty it return the empty result( as it was initialized with no new data inside it)
             return result;
         } catch (error) {
             console.error(`Error fetching report: ${error}`);
