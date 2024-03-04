@@ -2,10 +2,10 @@ import DevelopersModel from "../models/developersModel.js";
 
 export default class DevelopersDAO {
 
-    static async getAllDevelopers(user_id, year, month) {
+    static async getAllDevelopers() {
         try {
             // Get all the developers info
-            const allDevelopers = await DevelopersModel.find({firstname,lastname,id,email},null,null);
+            const allDevelopers = await DevelopersModel.find({},{ _id: 0 },null);
 
             return allDevelopers;
         } catch (error) {
