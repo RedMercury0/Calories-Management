@@ -8,7 +8,7 @@ export default class DevelopersDAO {
             // Get all the developers info
             return await DevelopersModel.find({}, {_id: 0}, null);
         } catch (error) {
-            console.error(`Error fetching report: ${error}`);
+            console.error(`Error fetching developers info: ${error}`);
             throw error;
         }
     }
