@@ -12,7 +12,9 @@ export default class CaloriesController {
 
             // Check if all required parameters are present
             if (!user_id || !description || !category || !amount) {
+
                 return res.status(400).json({ error: "Missing required parameters!" });
+
             }
 
             // Date validation
@@ -35,12 +37,27 @@ export default class CaloriesController {
                 );
 
             } else if (!year || !month || !day) {
+
                 // If only partial date was sent
                 return res.status(400).json({ error: "Date must be fully specified or fully omitted!" });
+
             }else if (year && month && day) {
+
                 // Invalid date format check
-                if (!isNaN(Date.parse(`${year}-${month}-${day}`))) {
+                if (isNaN(Date.parse(`${year}-${month}-${day}`))) {
                     return res.status(400).json({ error: "Date has wrong format or invalid parameters!" });
+                }
+
+                // Parse year as integers
+                const parsedYear = parseInt(year);
+
+                // Check if year is within a reasonable range (current year +/- 100)
+                const currentYear = new Date().getFullYear();
+                const minYear = currentYear - 100;
+                const maxYear = currentYear + 100;
+
+                if (parsedYear < minYear || parsedYear > maxYear) {
+                    return res.status(400).json({ error: "Year is out of range!" });
                 }
 
                 const caloriesResponse = await CaloriesDAO.addCalories(
