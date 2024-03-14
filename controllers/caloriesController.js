@@ -8,19 +8,32 @@ export default class CaloriesController {
     static async apiPostCalories(req, res, next) {
         try {
 
-            const { user_id, description, category, amount } = req.body;
+            const { user_id, description, category, amount, year, month, day } = req.body;
 
             // Check if all required parameters are present
             if (!user_id || !description || !category || !amount) {
                 return res.status(400).json({ error: "Missing required parameters!" });
             }
 
+            // Date validation
+            if ((year && month && day) || (!year && !month && !day)) {
+                // If only partial date was sent
+                if (!year || !month || !day) {
+                    return res.status(400).json({ error: "Date must be fully specified or fully omitted!" });
+                }
 
-            // If year, month, and day are not provided by the user in the url, will use the current date
-            const currentDate = new Date();
-            const year = req.body.year || currentDate.getFullYear();
-            const month = req.body.month || currentDate.getMonth() + 1;
-            const day = req.body.day || currentDate.getDate();
+                // Invalid date format check
+                if (!isNaN(Date.parse(`${year}-${month}-${day}`))) {
+                    return res.status(400).json({ error: "Date has wrong format or invalid parameters!" });
+                }
+            } else {
+                // If year, month, and day are not provided by the user in the url, will use the current date
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month =  currentDate.getMonth() + 1;
+                const day =  currentDate.getDate();
+            }
+
 
             const caloriesResponse = await CaloriesDAO.addCalories(
                 user_id,
