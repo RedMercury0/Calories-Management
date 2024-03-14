@@ -16,34 +16,44 @@ export default class CaloriesController {
             }
 
             // Date validation
-            if ((year && month && day) || (!year && !month && !day)) {
-                // If only partial date was sent
-                if (!year || !month || !day) {
-                    return res.status(400).json({ error: "Date must be fully specified or fully omitted!" });
-                }
+            // If year, month, and day are not provided by the user in the url, will use the current date
+            if(!year && !month && !day) {
 
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonth =  currentDate.getMonth() + 1;
+                const currentDay =  currentDate.getDate();
+
+                const caloriesResponse = await CaloriesDAO.addCalories(
+                    user_id,
+                    currentYear,
+                    currentMonth,
+                    currentDay,
+                    description,
+                    category.toLowerCase(),
+                    amount
+                );
+
+            } else if (!year || !month || !day) {
+                // If only partial date was sent
+                return res.status(400).json({ error: "Date must be fully specified or fully omitted!" });
+            }else if (year && month && day) {
                 // Invalid date format check
                 if (!isNaN(Date.parse(`${year}-${month}-${day}`))) {
                     return res.status(400).json({ error: "Date has wrong format or invalid parameters!" });
                 }
-            } else {
-                // If year, month, and day are not provided by the user in the url, will use the current date
-                const currentDate = new Date();
-                const year = currentDate.getFullYear();
-                const month =  currentDate.getMonth() + 1;
-                const day =  currentDate.getDate();
+
+                const caloriesResponse = await CaloriesDAO.addCalories(
+                    user_id,
+                    year,
+                    month,
+                    day,
+                    description,
+                    category.toLowerCase(),
+                    amount
+                );
             }
 
-
-            const caloriesResponse = await CaloriesDAO.addCalories(
-                user_id,
-                year,
-                month,
-                day,
-                description,
-                category.toLowerCase(),
-                amount
-            );
 
             res.json({ status: "success" });
         } catch (e) {
