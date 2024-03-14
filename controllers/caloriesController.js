@@ -6,27 +6,31 @@ export default class CaloriesController {
     // Add a new calorie consumption item by sending (with the POST method)
     // the following parameters: user_id, year, month, day, description, category, and sum.
     static async apiPostCalories(req, res, next) {
+        let caloriesResponse;
+        const validCategories = ['breakfast', 'lunch', 'dinner', 'other'];
+
         try {
 
             const { user_id, description, category, amount, year, month, day } = req.body;
 
             // Check if all required parameters are present
             if (!user_id || !description || !category || !amount) {
-
                 return res.status(400).json({ error: "Missing required parameters!" });
-
+            }
+            // Category validation
+            if (!validCategories.includes(category)) {
+                return res.status(400).json({ error: "Invalid category value!" });
             }
 
             // Date validation
             // If year, month, and day are not provided by the user in the url, will use the current date
             if(!year && !month && !day) {
-
                 const currentDate = new Date();
                 const currentYear = currentDate.getFullYear();
                 const currentMonth =  currentDate.getMonth() + 1;
                 const currentDay =  currentDate.getDate();
 
-                const caloriesResponse = await CaloriesDAO.addCalories(
+                caloriesResponse = await CaloriesDAO.addCalories(
                     user_id,
                     currentYear,
                     currentMonth,
@@ -60,7 +64,7 @@ export default class CaloriesController {
                     return res.status(400).json({ error: "Year is out of range!" });
                 }
 
-                const caloriesResponse = await CaloriesDAO.addCalories(
+                caloriesResponse = await CaloriesDAO.addCalories(
                     user_id,
                     year,
                     month,
@@ -72,7 +76,7 @@ export default class CaloriesController {
             }
 
 
-            res.json({ status: "success" });
+            res.json(caloriesResponse);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }
