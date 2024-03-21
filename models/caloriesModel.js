@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 const calorieSchema = new mongoose.Schema({
     user_id: {
-        type: String,
+        type: Number,
         required: true
     },
     year: {
