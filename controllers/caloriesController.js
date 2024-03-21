@@ -1,6 +1,5 @@
 import CaloriesDAO from "../dao/caloriesDAO.js";
 
-
 export default class CaloriesController {
 
     // Add a new calorie consumption item by sending (with the POST method)
@@ -13,13 +12,13 @@ export default class CaloriesController {
 
             const { user_id, description, category, amount, year, month, day } = req.body;
 
-            // Check if all required parameters are present
+            // Check if all required parameters are present and valid
             if (!user_id || !description || !category || !amount) {
                 return res.status(400).json({ error: "Missing required parameters!" });
             }
-            // Category validation
-            if (!validCategories.includes(category)) {
-                return res.status(400).json({ error: "Invalid category value!" });
+            else if(isNaN(user_id) || !validCategories.includes(category) || isNaN(amount)){
+                return res.status(400).json({ error: "Invalid parameters parameters!" });
+
             }
 
             // Date validation
@@ -50,6 +49,16 @@ export default class CaloriesController {
                 // Invalid date format check
                 if (isNaN(Date.parse(`${year}-${month}-${day}`))) {
                     return res.status(400).json({ error: "Date has wrong format or invalid parameters!" });
+                } else if(month === 2){
+                    // Check if the year is a leap year
+                    const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+
+                    // Validate the day based on whether it's a leap year or not
+                    if (isLeapYear && day > 29) {
+                        return res.status(400).json({ error: "Date has wrong format or invalid parameters!" });
+                    } else if(day > 28){
+                        return res.status(400).json({ error: "Date has wrong format or invalid parameters!" });
+                    }
                 }
 
                 // Parse year as integers
